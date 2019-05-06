@@ -5,9 +5,9 @@ using System.Text;
 
 namespace SynUtil.Crypto
 {
-    public class Hash
+    public static class Hash
     {
-        public string MD5(string toHash)
+        public static string MD5(string toHash)
         {
             // Use input string to calculate MD5 hash
             using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
@@ -24,7 +24,7 @@ namespace SynUtil.Crypto
                 return sb.ToString();
             }
         }
-        public string MD5(byte[] toHash)
+        public static string MD5(byte[] toHash)
         {
             // Use input string to calculate MD5 hash
             using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
@@ -40,7 +40,7 @@ namespace SynUtil.Crypto
                 return sb.ToString();
             }
         }
-        public string SHA1(string toHash)
+        public static string SHA1(string toHash)
         {
             // Use input string to calculate MD5 hash
             using (System.Security.Cryptography.SHA1 sha1 = System.Security.Cryptography.SHA1.Create())
@@ -57,7 +57,7 @@ namespace SynUtil.Crypto
                 return sb.ToString();
             }
         }
-        public string SHA256(string toHash)
+        public static string SHA256(string toHash)
         {
             // Use input string to calculate MD5 hash
             using (System.Security.Cryptography.SHA256 sha256 = System.Security.Cryptography.SHA256.Create())
@@ -74,7 +74,7 @@ namespace SynUtil.Crypto
                 return sb.ToString();
             }
         }
-        public string SHA512(string toHash)
+        public static string SHA512(string toHash)
         {
             // Use input string to calculate MD5 hash
             using (System.Security.Cryptography.SHA512 sha512 = System.Security.Cryptography.SHA512.Create())
@@ -96,7 +96,7 @@ namespace SynUtil.Crypto
         /// </summary>
         /// <param name="toHash"></param>
         /// <returns></returns>
-        public string BCryptHash(string toHash)
+        public static string BCryptHash(string toHash)
         {
             string rtn = String.Empty;
 
@@ -104,7 +104,7 @@ namespace SynUtil.Crypto
 
             return rtn;
         }
-        public bool BCryptHashIsMatch(string plainText, string inHash)
+        public static bool BCryptHashIsMatch(string plainText, string inHash)
         {
             return BCrypt.Net.BCrypt.Verify(plainText, inHash);
         }
@@ -113,7 +113,7 @@ namespace SynUtil.Crypto
         /// </summary>
         /// <param name="toHash"></param>
         /// <returns></returns>
-        public string Scrypt(string toHash)
+        public static string Scrypt(string toHash)
         {
             ScryptEncoder encod = new ScryptEncoder();
 
@@ -121,13 +121,13 @@ namespace SynUtil.Crypto
 
             return hash;
         }
-        public bool ScryptIsMatch(string plainText, string inHash)
+        public static bool ScryptIsMatch(string plainText, string inHash)
         {
             ScryptEncoder encod = new ScryptEncoder();
 
             return encod.Compare(plainText, inHash);
         }
-        public string LoopedSHA512(string toHash)
+        public static string LoopedSHA512(string toHash)
         {
             //Default number of loops so that the hash takes about 1/10th of a second to calculate
             //With a string of 8 characters [a-z,A-Z,0-9] there are 2.18e14 possible combinations
@@ -146,7 +146,7 @@ namespace SynUtil.Crypto
         /// <param name="toHash"></param>
         /// <param name="loops"></param>
         /// <returns></returns>
-        public string LoopedSHA512(string toHash, int loops)
+        public static string LoopedSHA512(string toHash, int loops)
         {
             string loopedHash = toHash;
 
@@ -177,11 +177,11 @@ namespace SynUtil.Crypto
 
             return loopedHash;
         }
-        public string BytesToHex(byte[] bytes)
+        public static string BytesToHex(byte[] bytes)
         {
             return BitConverter.ToString(bytes).Replace("-", "");
         }
-        public string CalculateMD5Checksum(string fileName)
+        public static string CalculateMD5Checksum(string fileName)
         {
             using (var md5 = System.Security.Cryptography.MD5.Create())
             {

@@ -60,46 +60,45 @@ namespace ApiTests
         [TestMethod]
         public void TestHash()
         {
-            Hash hash = new Hash();
             Stopwatch stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            string hashTextLooped = hash.LoopedSHA512(ALL_CHARS);
+            string hashTextLooped = Hash.LoopedSHA512(ALL_CHARS);
             stopwatch.Stop();
             long elapsedLoop = stopwatch.ElapsedMilliseconds;
             stopwatch.Reset();
             stopwatch.Start();
-            string hashMD5 = hash.MD5(ALL_CHARS);
+            string hashMD5 = Hash.MD5(ALL_CHARS);
             stopwatch.Stop();
             long elapsedMD5 = stopwatch.ElapsedMilliseconds;
             stopwatch.Reset();
             stopwatch.Start();
-            string hashSHA1 = hash.SHA1(ALL_CHARS);
+            string hashSHA1 = Hash.SHA1(ALL_CHARS);
             stopwatch.Stop();
             long elapsedSHA1 = stopwatch.ElapsedMilliseconds;
             stopwatch.Reset();
             stopwatch.Start();
-            string hashSHA256 = hash.SHA256(ALL_CHARS);
+            string hashSHA256 = Hash.SHA256(ALL_CHARS);
             stopwatch.Stop();
             long elapsedSHA256 = stopwatch.ElapsedMilliseconds;
             stopwatch.Reset();
             stopwatch.Start();
-            string hashSHA512 = hash.SHA512(ALL_CHARS);
+            string hashSHA512 = Hash.SHA512(ALL_CHARS);
             stopwatch.Stop();
             long elapsedSHA512 = stopwatch.ElapsedMilliseconds;
             stopwatch.Reset();
             stopwatch.Start();
-            string hashBcrypt = hash.BCryptHash(ALL_CHARS);
+            string hashBcrypt = Hash.BCryptHash(ALL_CHARS);
             stopwatch.Stop();
             long elapsedBcrypt = stopwatch.ElapsedMilliseconds;
             stopwatch.Reset();
             stopwatch.Start();
-            string hashScrypt = hash.Scrypt(ALL_CHARS);
+            string hashScrypt = Hash.Scrypt(ALL_CHARS);
             stopwatch.Stop();
             long elapsedScrypt = stopwatch.ElapsedMilliseconds;
 
-            bool bcryptIsMatch = hash.BCryptHashIsMatch(ALL_CHARS, hashBcrypt);
-            bool scryptIsMatch = hash.ScryptIsMatch(ALL_CHARS, hashScrypt);
+            bool bcryptIsMatch = Hash.BCryptHashIsMatch(ALL_CHARS, hashBcrypt);
+            bool scryptIsMatch = Hash.ScryptIsMatch(ALL_CHARS, hashScrypt);
 
             Assert.AreEqual(hashTextLooped, "8CACF7DBEFE5CDA74EA6079830B3F02710C9F7E29EC263B7EC0B9A6D18654120C24491207E402F213D499C52930C018B871B0DFD549E150FD7F1FBEE46862187", "Hash Test LoopedSHA512 does not match predetermined value");
             Assert.AreEqual(hashMD5, "B4FD6F2E146E08446E8EB5BC997B907C", "Hash Test MD5 does not match predetermined value");
