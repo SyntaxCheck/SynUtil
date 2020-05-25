@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SynUtil.Formatters
 {
-    class NumberFormats
+    public static class NumberFormats
     {
-        private string LargeNumberToReadableText(long num)
+        public static string LargeNumberToReadableText(long num)
         {
             string formatted = String.Empty;
 
