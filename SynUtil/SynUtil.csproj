@@ -60,6 +60,7 @@
     <Compile Include="FileSystem\Logger.cs" />
     <Compile Include="FileSystem\LogInfo.cs" />
     <Compile Include="Formatters\NumberFormats.cs" />
+    <Compile Include="FormHelpers\Prompt.cs" />
     <Compile Include="Network\ResolveHostname.cs" />
     <Compile Include="Network\SendTcp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
