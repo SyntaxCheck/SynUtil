@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace SynUtil.FileSystem
@@ -69,23 +70,53 @@ namespace SynUtil.FileSystem
         }
         public static void ValidateLogPath(ref LogInfo logInfo)
         {
+            string program = "SysUtil";
+
             if (String.IsNullOrEmpty(logInfo.RootFolder) || String.IsNullOrEmpty(logInfo.LogFolder))
             {
-                throw new Exception("Log Validate Path: RootFolder and/or LogFolder not provided");
+                if (!EventLog.SourceExists(program))
+                    EventLog.CreateEventSource(program, "Application");
+
+                string message = "Log Validate Path: RootFolder and/or LogFolder not provided";
+
+                EventLog.WriteEntry(program, message, EventLogEntryType.Error);
+
+                throw new Exception(message);
             }
             else
             {
                 //Verify that the root folder exists
                 if (!Directory.Exists(logInfo.RootFolder))
                 {
-                    throw new Exception("Log Validate Path: RootFolder (" + logInfo.RootFolder + ") does not exist or we do not have permissions to it");
+                    if (!EventLog.SourceExists(program))
+                        EventLog.CreateEventSource(program, "Application");
+
+                    string message = "Log Validate Path: RootFolder (" + logInfo.RootFolder + ") does not exist or we do not have permissions to it";
+
+                    EventLog.WriteEntry(program, message, EventLogEntryType.Error);
+
+                    throw new Exception(message);
                 }
                 else
                 {
                     //Build the log subfolder if it does not exist
                     if (!Directory.Exists(Path.Combine(logInfo.RootFolder, logInfo.LogFolder)))
                     {
-                        Directory.CreateDirectory(Path.Combine(logInfo.RootFolder, logInfo.LogFolder));
+                        try
+                        {
+                            Directory.CreateDirectory(Path.Combine(logInfo.RootFolder, logInfo.LogFolder));
+                        }
+                        catch (Exception ex)
+                        {
+                            if (!EventLog.SourceExists(program))
+                                EventLog.CreateEventSource(program, "Application");
+
+                            string message = "Failed to build directory tree: " + Path.Combine(logInfo.RootFolder, logInfo.LogFolder);
+
+                            EventLog.WriteEntry(program, message, EventLogEntryType.Error);
+
+                            throw new Exception(message, ex);
+                        }
                     }
 
                     logInfo.PathValidated = true;
