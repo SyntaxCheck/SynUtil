@@ -66,6 +66,7 @@
     <Compile Include="FileSystem\Logger.cs" />
     <Compile Include="FileSystem\LogInfo.cs" />
     <Compile Include="Formatters\NumberFormats.cs" />
+    <Compile Include="Formatters\TimeSpanFormatter.cs" />
     <Compile Include="FormHelpers\Prompt.cs" />
     <Compile Include="Game\Map\MapLoader.cs" />
     <Compile Include="Game\Map\MapTile.cs" />
