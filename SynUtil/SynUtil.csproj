@@ -60,6 +60,7 @@
     <Compile Include="Database\MSSQL\SqlServerConInfo.cs" />
     <Compile Include="Database\Postgres\Postgres.cs" />
     <Compile Include="Database\MSSQL\SqlServer.cs" />
+    <Compile Include="Extensions\LinkedListExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="FileSystem\Base64Serializer.cs" />
     <Compile Include="FileSystem\BinarySerializer.cs" />

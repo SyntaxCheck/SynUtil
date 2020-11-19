@@ -9,6 +9,10 @@ namespace SynUtil.Extensions
 
         public static void Shuffle<T>(this IList<T> list)
         {
+            Shuffle(list, rng);
+        }
+        public static void Shuffle<T>(this IList<T> list, Random rng)
+        {
             int n = list.Count;
             while (n > 1)
             {

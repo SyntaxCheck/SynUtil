@@ -5,6 +5,8 @@ using SynUtil.Crypto;
 using System.Diagnostics;
 using SynUtil.FileSystem;
 using System.IO;
+using System.Collections.Generic;
+using SynUtil.Extensions;
 
 namespace ApiTests
 {
@@ -25,10 +27,10 @@ namespace ApiTests
             SendPortCheck spc = new SendPortCheck();
 
             string rtn = spc.CheckPort("www.google.com", 12345);
-            Assert.IsTrue(rtn.Contains("Failure:"), "Banspad.com Blocked port check");
+            Assert.IsTrue(rtn.Contains("Failure:"), "google.com Blocked port check");
 
             rtn = spc.CheckPort("www.google.com", 80);
-            Assert.IsTrue(rtn.Contains("Success:"), "Banspad.com Open port check");
+            Assert.IsTrue(rtn.Contains("Success:"), "google.com Open port check");
         }
         [TestMethod]
         public void TestHexConversion()
@@ -107,6 +109,31 @@ namespace ApiTests
             Assert.AreEqual(hashSHA512, "BDB6E7C0AB15497A7769F70AB786EF9BE3EBA7E6AC431BD1294739003B8DF6DB58911755B3EBAD153DCD2F2A34FB549F91AAE0A1B738E883BBBD65985B79DEE6", "Hash Test SHA512 does not match predetermined value");
             Assert.AreEqual(bcryptIsMatch, true, "BCrypt isMatch not returning a match");
             Assert.AreEqual(scryptIsMatch, true, "Scrypt isMatch not returning a match");
+        }
+        [TestMethod]
+        public void TestExtensionMethods()
+        {
+            Random rand = new Random(0);
+            LinkedList<TestClass> ll = new LinkedList<TestClass>();
+            ll.AddLast(new TestClass() { Value1 = 2, Value2 = 6 });
+            ll.AddLast(new TestClass() { Value1 = 8, Value2 = 1 });
+            ll.AddLast(new TestClass() { Value1 = 4, Value2 = 0 });
+            ll.AddLast(new TestClass() { Value1 = 0, Value2 = 9 });
+            ll.AddLast(new TestClass() { Value1 = 7, Value2 = 5 });
+            ll.AddLast(new TestClass() { Value1 = 1, Value2 = 1 });
+            ll.AddLast(new TestClass() { Value1 = 5, Value2 = 0 });
+
+            ll.QuickSort(new SortDescending());
+            Assert.AreEqual(ll.First.Value.Value1, 8, "LinkedList QuickSort did not sort in Descending order");
+            ll.QuickSort(new SortAscending());
+            Assert.AreEqual(ll.First.Value.Value1, 0, "LinkedList QuickSort did not sort in Ascending order");
+
+            List<TestClass> lst = new List<TestClass>();
+            foreach (TestClass tc in ll)
+                lst.Add(tc);
+
+            lst.Shuffle(rand);
+            Assert.AreNotEqual(ll.First.Value.Value1, 2, "List Shuffle did not change the order");
         }
 
         //Private Functions
