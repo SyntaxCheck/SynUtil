@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,6 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\VerticalProgressBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Crypto\AesEncryption.cs" />
     <Compile Include="Crypto\BCryptFiles\BCrypt.cs" />
     <Compile Include="Crypto\BCryptFiles\BcryptAuthenticationException.cs" />
