@@ -61,7 +61,7 @@ namespace SynUtil.Formatters
         }
         public static string NumFormatLarge(double num)
         {
-            return NumFormatLargeAndDecimals(num, false);
+            return NumFormatLargeAndDecimals(Math.Round(num, 0), false);
         }
         public static string NumFormatLargeAndDecimals(double num)
         {
