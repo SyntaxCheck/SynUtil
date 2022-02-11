@@ -73,9 +73,11 @@
     <Compile Include="Formatters\NumberFormats.cs" />
     <Compile Include="Formatters\TimeSpanFormatter.cs" />
     <Compile Include="FormHelpers\Prompt.cs" />
+    <Compile Include="Game\Area.cs" />
     <Compile Include="Game\Map\MapLoader.cs" />
     <Compile Include="Game\Map\MapTile.cs" />
     <Compile Include="Game\Map\TileSetLoader.cs" />
+    <Compile Include="Game\Tile.cs" />
     <Compile Include="Number\NumberCounter.cs" />
     <Compile Include="Network\ResolveHostname.cs" />
     <Compile Include="Network\SendTcp.cs" />
