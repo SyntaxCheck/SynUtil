@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Linq;
 
 namespace SynUtil.Game.Map
 {
@@ -50,6 +53,9 @@ namespace SynUtil.Game.Map
             {
                 string line = String.Empty;
                 string firstLine = String.Empty;
+                List<GridGroup> gridGroups = null;
+                int gridSize = 25;
+                int gridRowWidth = 80;
 
                 int y = 0;
                 while ((line = sr.ReadLine()) != null)
@@ -63,6 +69,25 @@ namespace SynUtil.Game.Map
                     }
                     else
                     {
+                        if (gridGroups == null)
+                        {
+                            gridGroups = new List<GridGroup>();
+                            int yG = 0;
+                            int xG = 0;
+                            while (yG < tileInformation.GetLength(0))
+                            {
+                                xG = 0;
+                                while (xG < tileInformation.GetLength(1))
+                                {
+                                    GridGroup grid = new GridGroup();
+                                    grid.Bounds = new Rectangle(xG, yG, gridSize, gridSize);
+                                    grid.HasChanges = true;
+                                    gridGroups.Add(grid);
+                                    xG += gridSize;
+                                }
+                                yG += gridSize;
+                            }
+                        }
                         for (int i = 0; i < (line.Length / 4); i++)
                         {
                             string tileText = line.Substring(i * 4, 4);
@@ -73,6 +98,12 @@ namespace SynUtil.Game.Map
 
                             tile.IsWalkable = tileText.Substring(0, 1) == "1" ? true : false;
                             tile.TileBorderType = (TileBorderType)borderType;
+                            //(80*(y/25)) + (x/25)
+                            tile.GridSection = gridGroups[(gridRowWidth*(y/gridSize)) + (i / gridSize)];
+
+                            //Mod(y,25) * 25 + Mod(x,25)
+                            //tile.GridSection = gridGroups[((y % gridSize) * gridSize) + (i % gridSize)];
+                            //tile.GridSection = gridGroups.Where(t => t.Bounds.Contains(new Point(i, y))).FirstOrDefault();
 
                             switch (tileType)
                             {

@@ -36,5 +36,20 @@ namespace SynUtil.Game.Map
 
             return rectangles;
         }
+        public static List<System.Drawing.Rectangle> GetTileSetRectanglesSysDrawingList(int columns, int rows, System.Drawing.Image tileTexture)
+        {
+            List<System.Drawing.Rectangle> rectangles = new List<System.Drawing.Rectangle>();
+            Point tileSize = new Point(tileTexture.Width / columns, tileTexture.Height / rows);
+
+            for (int y = 0; y < rows; y++)
+            {
+                for (int x = 0; x < columns; x++)
+                {
+                    rectangles.Add(new System.Drawing.Rectangle(x * tileSize.X, y * tileSize.Y, tileSize.X, tileSize.Y));
+                }
+            }
+
+            return rectangles;
+        }
     }
 }
