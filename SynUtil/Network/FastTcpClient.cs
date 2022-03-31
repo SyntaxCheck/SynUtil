@@ -39,7 +39,12 @@ namespace SynUtil.Network
             Client = new TcpClient();
             Client.ReceiveTimeout = ReadTimeout;
             Client.SendTimeout = SendTimeout;
-            Client.Connect(Hostname, Port);
+            //Client.Connect(Hostname, Port);
+
+            if (!Client.ConnectAsync(Hostname, Port).Wait(5000))
+            {
+                throw new Exception("Failed to connect to Host " + Hostname + " over port " + Port);
+            }
         }
         public void Disconnect()
         {
