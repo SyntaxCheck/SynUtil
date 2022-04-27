@@ -36,14 +36,18 @@ namespace SynUtil.Network
 
         public void Connect()
         {
+            Connect(Port);
+        }
+        public void Connect(int portOverride)
+        {
             Client = new TcpClient();
             Client.ReceiveTimeout = ReadTimeout;
             Client.SendTimeout = SendTimeout;
             //Client.Connect(Hostname, Port);
 
-            if (!Client.ConnectAsync(Hostname, Port).Wait(5000))
+            if (!Client.ConnectAsync(Hostname, portOverride).Wait(5000))
             {
-                throw new Exception("Failed to connect to Host " + Hostname + " over port " + Port);
+                throw new Exception("Failed to connect to Host " + Hostname + " over port " + portOverride);
             }
         }
         public void Disconnect()
@@ -59,9 +63,13 @@ namespace SynUtil.Network
         }
         public string SendData(string message)
         {
+            return SendData(message, Port);
+        }
+        public string SendData(string message, int portOverride)
+        {
             string rtn = String.Empty;
 
-            Connect();
+            Connect(portOverride);
             if (Client.Connected)
             {
                 Stream = Client.GetStream();
