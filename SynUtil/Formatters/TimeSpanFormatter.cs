@@ -105,7 +105,7 @@ namespace SynUtil.Formatters
             else if (timeSpan.TotalMilliseconds >= 1)
             {
                 if(condensedNames)
-                    unit = "m";
+                    unit = "ms";
                 else
                     unit = "millisecond";
                 num = timeSpan.TotalMilliseconds;
