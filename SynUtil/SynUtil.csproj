@@ -70,6 +70,7 @@
     <Compile Include="FileSystem\BinarySerializer.cs" />
     <Compile Include="FileSystem\Logger.cs" />
     <Compile Include="FileSystem\LogInfo.cs" />
+    <Compile Include="Formatters\FilesystemFormats.cs" />
     <Compile Include="Formatters\NumberFormats.cs" />
     <Compile Include="Formatters\TimeSpanFormatter.cs" />
     <Compile Include="FormHelpers\Prompt.cs" />

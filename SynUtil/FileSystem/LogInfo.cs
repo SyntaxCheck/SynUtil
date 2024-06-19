@@ -16,6 +16,7 @@ namespace SynUtil.FileSystem
         private bool appendDateTime; //Should the LogFileName append the DateTime to the end of the FileName using the AppendDateTimeFormat
         private bool isDebug;
         private bool pathValidated;
+        private int retryCount;
 
         public bool AppendDateTime
         {
@@ -93,11 +94,17 @@ namespace SynUtil.FileSystem
             get { return pathValidated; }
             set { pathValidated = value; }
         }
+        public int RetryCount
+        {
+            get { return retryCount; }
+            set { retryCount = value; }
+        }
 
         public LogInfo()
         {
             rootFolder = logFolder = logFileName = appendDateTimeFormat = String.Empty;
             isDebug = appendDateTime = pathValidated = false;
+            RetryCount = 0;
         }
     }
 }

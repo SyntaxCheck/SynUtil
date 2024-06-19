@@ -1,25 +1,44 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 
 namespace SynUtil.FileSystem
 {
     public class Logger
     {
-        public static void Write(string logPath, string logMessage)
+        public static void Write(string logPath, string logMessage, int retryCount = 0)
         {
-            if (!File.Exists(logPath))
+            int attempts = 0;
+
+            while (attempts <= retryCount)
             {
-                using (StreamWriter sw = File.CreateText(logPath))
+                attempts++;
+                try
                 {
-                    sw.WriteLine(DateTime.Now.ToString() + ": " + logMessage);
+                    if (!File.Exists(logPath))
+                    {
+                        using (StreamWriter sw = File.CreateText(logPath))
+                        {
+                            sw.WriteLine(DateTime.Now.ToString() + ": " + logMessage);
+                        }
+                    }
+                    else
+                    {
+                        using (StreamWriter sw = File.AppendText(logPath))
+                        {
+                            sw.WriteLine(DateTime.Now.ToString() + ": " + logMessage);
+                        }
+                    }
+
+                    return;
                 }
-            }
-            else
-            {
-                using (StreamWriter sw = File.AppendText(logPath))
+                catch (Exception ex)
                 {
-                    sw.WriteLine(DateTime.Now.ToString() + ": " + logMessage);
+                    if (attempts >= retryCount)
+                        throw ex;
+                    else
+                        Thread.Sleep(250);
                 }
             }
         }
@@ -29,7 +48,7 @@ namespace SynUtil.FileSystem
             if (!logInfo.PathValidated)
                 ValidateLogPath(ref logInfo);
 
-            Write(logInfo.FullPath, logMessage);
+            Write(logInfo.FullPath, logMessage, logInfo.RetryCount);
         }
         public static void Write(LogInfo logInfo, string messageHeader, Exception inException)
         {
@@ -47,11 +66,11 @@ namespace SynUtil.FileSystem
                 Write(logInfo, messageHeader + " Inner Exception StackTrace: " + inException.InnerException.StackTrace);
             }
         }
-        public static void WriteDbg(string logPath, string logMessage, bool isDebug = true)
+        public static void WriteDbg(string logPath, string logMessage, bool isDebug = true, int retryCount = 0)
         {
             if (isDebug)
             {
-                Write(logPath, logMessage);
+                Write(logPath, logMessage, retryCount);
             }
         }
         public static void WriteDbg(LogInfo logInfo, string logMessage)
